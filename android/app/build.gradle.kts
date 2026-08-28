@@ -258,7 +258,7 @@ tasks.named("preBuild").configure {
 
 dependencies {
     implementation(files(discordSocialSdkAar))
-    implementation("androidx.browser:browser:1.8.0")
+    implementation("androidx.browser:browser:1.10.0")
     // Pinned to the last libtorrent4j Android build targeting API 24. The
     // subsequent 2.1.0-39 artifacts require API 28, which would drop Fire OS
     // 6 and Android 7 devices currently supported by TetoTV.
