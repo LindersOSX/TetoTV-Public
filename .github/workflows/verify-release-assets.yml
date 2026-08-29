@@ -2,7 +2,7 @@ name: Verify release assets
 
 on:
   release:
-    types: [published, edited]
+    types: [published]
 
 permissions:
   contents: read
@@ -11,7 +11,7 @@ jobs:
   verify-assets:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           ref: ${{ github.event.release.tag_name }}
           fetch-depth: 0
@@ -65,7 +65,7 @@ jobs:
             exit 1
           fi
 
-      - uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
         with:
           channel: stable
           cache: true
@@ -73,7 +73,7 @@ jobs:
       - name: Resolve Dart package metadata
         run: flutter pub get
 
-      - uses: android-actions/setup-android@v3
+      - uses: android-actions/setup-android@9fc6c4e9069bf8d3d10b2204b1fb8f6ef7065407 # v3
 
       - name: Install APK inspection tools
         shell: bash
