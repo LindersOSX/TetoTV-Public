@@ -1,166 +1,97 @@
-# TetoTV
-
-**TetoTV — An open-source media library, playback, and tracking client for Android TV, Google TV, Fire TV, and Android**
-
-TetoTV is a TV-first client for discovering titles, tracking progress, and playing media from services and libraries configured by the user. It runs as a standalone Android app with no companion server to install or maintain.
-
-TetoTV does not host, index, supply, recommend, or endorse media sources, provider extensions, marketplace catalogs, or credentials. No third-party catalog or provider is bundled or preconfigured. Users must have authorization to access, play, and download any media they connect.
-
-[Public source and status](https://github.com/LindersOSX/TetoTV-Public) · [Download the current Beta](https://github.com/LindersOSX/TetoTV-Beta/releases/latest) · [Join Discord](https://discord.gg/juC6k7d4WY) · [Watch on YouTube](https://www.youtube.com/@TetoTVApp)
-
-## Public channel status
-
-This is the clean, open-source Public repository and release-readiness page. It contains the current reviewed TetoTV source and compliance documents, but **no Public APK, tag, or GitHub release is currently published**. The prior Public release has been retired while the next Public build is reviewed. Test builds remain available only from the separate [Beta channel](https://github.com/LindersOSX/TetoTV-Beta/releases/latest).
-
-The Public updater is intentionally linked to this repository. Until a separately approved Public release is created, its `/releases/latest` endpoint returns no available update.
-
-## Feature summary
-
-- Remote-first layouts for Android TV, Google TV, and Fire TV, with support for both ARM32 and ARM64 devices.
-- Optional AniList and MyAnimeList list/progress sync, plus local profiles for viewers who do not use either tracker.
-- A generic compatibility layer for user-supplied HTTPS extensions, with bounded runtime and network controls, health results, and staged troubleshooting.
-- Offline episode and whole-season downloads from sources the user is authorized to download, with an integrated Download Manager.
-- Optional user-configured Debrid and direct peer-to-peer integrations; direct peer-to-peer use is off by default.
-- MPV playback with subtitles, audio-track selection, playback speed, intro/outro skipping when timing data is available, and TV-friendly seeking.
-- Optional Plex and Jellyfin integrations that add personal-library episodes to the same source picker.
-- Watch Party rooms with synchronized playback and host controls.
-
-## Feature matrix
-
-| Capability | Status | Notes |
-| --- | --- | --- |
-| Android TV and Google TV | Supported | Modern Layout is designed for D-pads and TV remotes. |
-| Amazon Fire TV / Fire OS | Supported | Fire OS 6 or newer; Fire OS 5 is not supported. |
-| Standalone use | Supported | No PC app or companion server is required for normal browsing and playback. |
-| User-supplied extensions | Optional | No extension or catalog is bundled, recommended, or endorsed. Compatibility depends on the service the user configures. |
-| AniList / MyAnimeList | Optional | Sync lists and progress, or use a local-only profile. |
-| MPV playback | Supported | Used for TetoTV's integrated playback experience. |
-| Offline downloads | Beta | Individual episodes, whole-season queues, and offline playback. |
-| Debrid services | Optional | Users may connect a supported account for media they are authorized to access. |
-| Direct peer-to-peer playback | Optional beta | Off by default and requires an explicit privacy warning and opt-in. |
-| Plex / Jellyfin | Optional | Requires the viewer's own configured media server. |
-| Watch Party | Beta | Synchronized rooms use TetoTV's hosted coordination service. |
-
-## Current releases
-
-| Channel | Version | Best for |
-| --- | --- | --- |
-| Public | Not published | Source and release-readiness documents are available, but no Public APK is currently offered |
-| Beta | [2.0.40](docs/RELEASE_NOTES_2.0.40.md) | Testing current fixes and features before a separately reviewed Public release |
-
-The Public updater repository intentionally has no release while the Public build is held for review. Existing Beta installations continue to update from the Beta repository. Android never permits an in-place install of an APK with a lower build code; Developer Mode does not bypass that platform rule.
-
-## Android TV / Fire TV
-
-TetoTV's Modern Layout is built around visible focus, predictable D-pad movement, large-screen spacing, and a reliable path back to navigation. Google TV devices use the Android TV build. Android phones use the same theme and features with a bottom navigation bar in portrait and a left rail in landscape.
-
-The current universal APK supports:
-
-- `arm64-v8a` (ARM64), used by many newer Android TV, Google TV, and Fire TV devices.
-- `armeabi-v7a` (ARM32), used by many older or lower-cost Fire TV devices.
-- Android 7.0 / API 24 or newer, including Fire OS 6 and newer.
-
-Fire OS 5 devices cannot install the current build because they are below the minimum Android API level.
-
-## Standalone architecture / no server required
-
-TetoTV installs directly on the TV or Android device. Normal discovery, source selection, playback, tracking, and downloads do not require a companion app, Docker container, desktop process, or self-hosted TetoTV server.
-
-You connect only the services you choose. Account linking and Watch Party use TetoTV-hosted coordination where needed, while Plex and Jellyfin require a personal server only when those optional integrations are enabled.
-
-## User-supplied extensions
-
-TetoTV includes a generic compatibility layer for user-supplied HTTPS extensions. Extensions are untrusted third-party code, are not reviewed or endorsed by TetoTV, and remain subject to bounded runtime and network controls. Technical compatibility does not mean that an extension or its content is lawful, safe, or approved.
-
-TetoTV ships without a catalog, suggested repository, provider, media index, or automatic installation path. Users must add extensions themselves and should connect only services and media they are authorized to use. Provider cards can display recent compatibility results and the last test date to help diagnose user-configured integrations.
-
-Third-party services and extensions can change independently of TetoTV. TetoTV does not host or relay their media and does not guarantee their availability, legality, security, or fitness for use.
-
-## Downloads
-
-The 2.0 Beta can save supported individual episodes or whole seasons from sources the user is authorized to download to a persistent Download Manager. Downloads are stored in a predictable show, season, and episode structure and include queue state, progress, speed, storage use, pause/resume, retry, cancel, and delete controls.
-
-Completed episodes appear as offline choices in the normal source picker and play through the normal MPV player. Basic show metadata and artwork remain available offline, watch progress is saved locally, and queued AniList/MyAnimeList updates retry when the connection returns.
-
-Downloads continue while TetoTV is minimized. If Android stops the process, an unfinished season plan resumes the next time the app opens. Android force-stop always ends active app work. Sources that rely on short-lived or private authorization may need to be selected again.
-
-## User-configured Debrid and peer-to-peer integrations
-
-TetoTV can connect to supported Debrid accounts selected and authorized by the user. Results can appear alongside user-configured extensions, downloaded media, and personal-library sources.
-
-Direct peer-to-peer playback and downloads are optional Beta features and are off by default. Enabling them requires a warning because public peers and trackers can see the viewer's public IP address, and the device may upload pieces. TetoTV uses a bounded temporary cache for playback and clears it when playback closes.
-
-Users are responsible for the services and sources they configure and for following the laws that apply to them.
-
-## AniList / MyAnimeList
-
-AniList and MyAnimeList connections are optional. Either tracker can sync lists and watch progress, while a local profile keeps the app usable without a tracker account. Catalog metadata uses mapped backup services when AniList is temporarily unavailable.
-
-Calendar notifications can alert viewers when followed Sub/simulcast episodes reach their scheduled airtime. Dub alerts are separate and remain idle unless TetoTV has a verified Dub schedule; the app does not guess a Dub release from the Japanese broadcast time.
-
-Discord Rich Presence is also optional and can show what is playing after the viewer links Discord.
-
-## Plex / Jellyfin as optional integrations
-
-Plex and Jellyfin are personal-media integrations, not requirements. When configured, TetoTV matches library episodes to the anime being viewed and adds them to the same show page, episode screen, source picker, history, progress, and previous/next episode flow used by online and downloaded sources.
-
-If Plex or Jellyfin is not configured—or the selected episode is not in the library—those sources stay hidden. A personal media server is required only for the integration the viewer chooses to use.
-
-## MPV playback and TV controls
-
-TetoTV uses MPV for its integrated player across supported user-configured services, downloaded media, Plex, Jellyfin, and local files. Playback controls include:
-
-- Previous and next episode.
-- Intro and outro skipping when timing data is available.
-- Optional filler skipping and filler labels.
-- Progress-bar scrubbing with scene previews.
-- D-pad seeking, including held-button seeking.
-- Playback speeds from 0.5x to 2x.
-- Audio, subtitle, aspect-ratio, and decoder controls.
-- In-app trailers on supported show pages.
-- Automatic source fallback that keeps position and preferred quality when possible.
-
-Viewers can also choose a specific installed external player in Settings. External players do not carry TetoTV's Watch Party, skip, fallback, or progress controls while the other app is open.
-
-## Watch Party
-
-Create or join a Watch Party from navigation, an episode screen, or the player. The host controls playback while guests stay synchronized. Rooms show participants, support host transfer and kicking, and display small join, leave, kick, and transfer notifications.
-
-Watch Party is enabled by default but can be turned off in Settings, which removes its navigation and episode-screen entry points.
-
-## Install
-
-1. Open the [current Beta release](https://github.com/LindersOSX/TetoTV-Beta/releases/latest). No Public APK is currently published.
-2. Download the file ending in `-universal.apk`.
-3. Allow installation from the browser or file manager if Android asks.
-4. Open TetoTV and complete the short setup.
-
-The universal APK contains both ARM32 (`armeabi-v7a`) and ARM64 (`arm64-v8a`) native libraries for compatible Android TV, Google TV, and Fire TV devices.
-
-## Updates and release channels
-
-TetoTV checks the two GitHub release repositories directly. APK downloads do not pass through a TetoTV server, and the app verifies package, version, architecture, and signer information before opening the Android installer.
-
-- A future Public build will use the `1.0.x` version line after a separate release review. The Public repository currently returns no release.
-- Beta builds use the `2.0.x` version line.
-- Release history remains available in Developer Mode. Android still blocks installing a build with a lower build code.
-
-The main TetoTV repository holds the full Flutter, Android, native-integration, test, documentation, and release-tooling source. GitHub Releases are one part of the project, not the purpose of the repository.
-
-## Diagnostics and privacy
-
-Anonymous crash reporting is off by default. A diagnostics report is created only when the viewer chooses to share one. Reports include a bounded 48-hour troubleshooting timeline while automatically removing credentials, room codes, media URLs, filenames, and private-server information.
-
-Beta builds offer an approximate anonymous aggregate live count, enabled by default with a Settings opt-out. It sends only `active` or `streaming` for a short-lived process session—never a profile, title, episode, source, device ID, URL, filename, or private-server information. Public builds disable this presence; no Public APK is currently published.
-
-Read the complete [privacy documentation](docs/PRIVACY.md) for report contents, redaction, optional integrations, and network behavior.
-
-## Source code and licenses
-
-TetoTV-authored source code is available in this repository under the MIT License. Distributed releases include the required third-party notices and native corresponding-source materials, including pinned MPL-covered source used by the optional direct-torrent engine. Bundled third-party components keep their own licenses and terms.
-
-TetoTV uses third-party services and open-source components but is not affiliated with, sponsored by, or endorsed by AniList, MyAnimeList, Discord, Amazon, Google, Plex, Jellyfin, or any streaming or Debrid provider. See the [content and source policy](CONTENT_POLICY.md) for the repository boundary and reporting path.
-
-## Help and feedback
-
-For announcements, support, and feature requests, [join the TetoTV Discord](https://discord.gg/juC6k7d4WY). When reporting a bug, include the TetoTV version, device model, Android or Fire OS version, steps to reproduce it, and a diagnostics report when possible.
+# Public launch and switching channels
+
+The app already pins its Public feed to
+`LindersOSX/TetoTV-Public` and its Beta feed to
+`LindersOSX/TetoTV-Beta`. Nothing needs to be added to the Public repository's
+Code page for discovery. Updates are GitHub **Releases**, with downloadable
+assets attached. As checked on November 13, 2026, Public's latest-release API
+returns 404 because no release is published.
+
+**GitHub preparation still required:** the Public repository's current
+[release-verification workflow](https://github.com/LindersOSX/TetoTV-Public/blob/main/.github/workflows/verify-release-assets.yml)
+was read-only checked on November 13, 2026. It accepts only old Beta releases
+and hard-codes a Beta release title. Before tagging the first Public build,
+update that repository with the matching reviewed source and a Public-capable
+verification workflow/tooling. Do not copy a Beta-only publisher unchanged or
+remove the existing source/signing/native-review checks to make it pass.
+The old workflow runs after publication with read-only permissions, so a
+failed check does not itself hide or delete the release from the app's feed.
+No remote files, tags, releases or repository settings were modified here.
+
+Public starts at **1.0**, followed by names such as **1.2, 1.3, 1.4**; Beta
+keeps **1.x.x** (and historical 2.x.x). Skipping a display number is fine.
+Settings → System → App updates → Update channel works without Developer Mode.
+Selecting a channel now checks its feed immediately without automatically
+downloading or installing anything. Automatic checks subsequently follow that
+selected feed. The installed build, not the selected feed, controls Beta-only
+runtime features.
+
+## Before building
+
+Choose the actual Public name and a production build number. Any `1.0` /
+`410089` values below are examples, not a release already built or approved.
+Keep the existing application/package ID and production signing key. This is
+one app with two feeds, not a second app with a different data directory.
+
+Android cannot install a lower build code over a newer one. Keep build numbers
+increasing across both repositories. Matching Public/Beta counterparts may use
+the same build code; an explicitly selected counterpart can then install in
+either direction with the same signer. A newer Beta cannot switch in-place to
+an older-code Public APK until a compatible Public build is available. Changing
+the feed never uninstalls the app or bypasses OS restrictions.
+
+## Publish Public Android
+
+1. Build the signed universal APK with the real two-part Public build name and
+   production build number. Merely renaming a Beta APK does not make it Public.
+2. Create a GitHub release in **TetoTV-Public** with tag `v1.<Public number>`
+   (first release: `v1.0`) and attach its matching universal APK. Uploading a file
+   to the repository's Code tab does not publish an app update.
+3. Keep it a normal completed release, not Draft or Pre-release, and set it as
+   Latest in that repository.
+4. Keep the Android build-code marker in the release notes. For an APK actually
+   built as `410089`, the marker would be:
+
+   ```html
+   <!-- tetotv-android-version-code: 410089 -->
+   ```
+
+   Replace that number with the APK's actual build code. The display version
+   alone cannot reliably decide Public/Beta update precedence. No separate
+   Android update JSON is required.
+5. Upload matching source, native-source and verification assets required by
+   the existing release-review policy. Review/approval gates remain unchanged;
+   this work does not publish or approve a Public release.
+
+## Public Windows
+
+Windows now accepts Public `v1.x` tags and verifies the manifest and installer
+against the **Public** repository, never the Beta repository. Attach both the
+installer and the generated `TetoTV-v1.x-windows-x64-update.json` to the same
+Public release. Do not rename either or edit size/SHA-256 fields manually.
+
+Use `tool/release/build_public_windows.ps1` with the chosen `-Version`,
+`-BuildNumber` and new `-OutputDirectory`; `-FlutterPath` can identify Flutter
+when it is not on PATH. Flutter needs a three-component numeric version
+internally, so the wrapper builds `1.x.0` but the validated native override
+preserves **1.x** as the displayed, reported and updater version. The wrapper
+restores its process-local environment afterward. Normal Beta builds are
+unchanged. Do not directly pass an unnormalized `1.x` to Flutter's Windows
+builder; Flutter would fall back to an incorrect native version.
+
+The packager refuses an EXE whose actual version/build differs from the Public
+version/build requested. Installation identity, data location and account
+storage stay the same. Existing Windows signature/security approval prompts
+still apply.
+
+## Before announcing
+
+- Check the Public release is visible while signed out and its APK downloads.
+- Check for updates from an older compatible Android and Windows installation.
+- Check both Public → Beta and Beta → Public, using compatible build codes.
+- Confirm settings/accounts survive installation; keep a backup for testing.
+- Current 1.0.88 release artifacts have not been rebuilt by this change. Do not
+  upload the old Beta binaries under a Public filename.
+
+Both repositories retain independent Latest releases. The old retained-2.0.80
+bridge marker is not needed for a new ordinary release.
